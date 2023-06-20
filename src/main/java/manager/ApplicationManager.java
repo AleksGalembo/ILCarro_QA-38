@@ -23,12 +23,12 @@ public class ApplicationManager {
     public void init(){
         wd = new ChromeDriver();
         user = new HelperUser(wd);// для связи с tests
-        wd.navigate().to("https://ilcarro.web.app/login?url=%2Fsearch");
+        wd.navigate().to("https://ilcarro.web.app/");
         wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 
-//    @AfterSuite
-//    public void tearDown(){
-//        wd.quit();
-//    }
+    @AfterSuite
+    public void tearDown(){
+       // wd.quit();
+    }
 }

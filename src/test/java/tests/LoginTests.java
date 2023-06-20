@@ -1,35 +1,86 @@
 package tests;
 
+import models.User;
 import org.openqa.selenium.By;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 public class LoginTests extends TestBase {
 
 
-//    @BeforeMethod
-//    public void preconditions(){
-//        if(app.getUser().isLogged()){
-//            app.getUser().logout();
-//        }
-//    }
-    @Test public void loginPositive(){
+    @BeforeMethod
+    public void preconditions(){
+        if(app.getUser().isLogged())
+        {
+          app.getUser().logout();
+        }
+    }
+    @Test public void loginNegativeUser(){
 
-        String email = "efpyi@example.com", password = "@#Aa12345)";
+        String email = "abc@def.com", password = "$Abcdef12345";
         app.getUser().openLoginForm();
         app.getUser().fillLoginForm(email, password);
         app.getUser().submitLogin();
         app.getUser().pause(3000);
         //
-        Assert.assertTrue(app.getUser().isElementPresent(By.xpath("[href='/logout?url=%2Fsearch']")));
+       // Assert.assertTrue(app.getUser().isElementPresent(By.cssSelector("[href='/logout?url=%2Fsearch']")));
+        Assert.assertEquals(app.getUser().elementGetText(By.xpath("//*[@role='dialog']//h2")),"Logged in success");
+        //как устроена цепочка? Чейн, методы возвращаюстя кроме войдов
+        // и для этого необходимо модифицировать сеттеры так чтобы вернуть что-то полезное
+        //
+
+    } @Test public void loginPositiveUserData (){
+
+        User user = new User()
+                .withEmail("asdf@fgmail.com")
+                .withPassword("$Abcdef12345")
+                ;
+        //
+        app.getUser().openLoginForm();
+        app.getUser().fillLoginForm(user.getEmail(), user.getPassword());
+        app.getUser().submitLogin();
+        app.getUser().pause(3000);
+        //
+       // Assert.assertTrue(app.getUser().isElementPresent(By.cssSelector("[href='/logout?url=%2Fsearch']")));
+        Assert.assertEquals(app.getUser().elementGetText(By.xpath("//*[@role='dialog']//h2")),"Logged in success");
+        //
 
     }
+
+
+
+
+
+
+
+//    @Test
+//    public void loginNegative(){
+//
+//        String email = "uuuUu@def.com", password = "$Abcdef12345";
+//        app.getUser().openLoginForm();
+//        app.getUser().fillLoginForm(email, password);
+//        app.getUser().submitLogin();
+//        app.getUser().pause(3000);
+//        //
+//        // Assert.assertTrue(app.getUser().isElementPresent(By.cssSelector("[href='/logout?url=%2Fsearch']")));
+//        Assert.assertEquals(app.getUser().elementGetText(By.xpath("//*[@role='dialog']//h2")),"Logged in success");
+//        //
+//
+//    }
 
 //    @AfterMethod
 //    public void tearDown(){
 //
 //
 //    }
+    @AfterMethod
+    public void postconditions(){
+        if(app.getUser().isDialogWindowPresent()){//если из диалог
+           app.getUser().closeDialogWindow();//
+        }
+
+    }
 
 }
