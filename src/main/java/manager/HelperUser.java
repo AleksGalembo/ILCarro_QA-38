@@ -36,7 +36,9 @@ public class HelperUser extends HelperBase {
     public void submitLogin(){
         click(By.cssSelector("button[type='submit']"));
     }
-
+    public void submitFailedLogin(){
+        click(By.xpath("//button[@type='button']"));
+    }
 
 
     public void logout(){
@@ -44,7 +46,7 @@ public class HelperUser extends HelperBase {
     }
 
     public boolean isLogged(){
-        return isElementPresent(By.cssSelector("[href=\"/logout?url=%2Fsearch\"]"));
+        return isElementPresent(By.cssSelector("[href=\"/logout?url=%2Fsearch\"]"));//
     }
 
     public boolean isDialogWindowPresent(){

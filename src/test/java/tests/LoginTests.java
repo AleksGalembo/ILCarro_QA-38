@@ -19,22 +19,25 @@ public class LoginTests extends TestBase {
     }
     @Test public void loginNegativeUser(){
 
-        String email = "abc@def.com", password = "$Abcdef12345";
+        String email = "abc11@def.com", password = "$Abcdef12345";
         app.getUser().openLoginForm();
         app.getUser().fillLoginForm(email, password);
-        app.getUser().submitLogin();
+        //app.getUser().submitLogin();
         app.getUser().pause(3000);
-        //
-       // Assert.assertTrue(app.getUser().isElementPresent(By.cssSelector("[href='/logout?url=%2Fsearch']")));
-        Assert.assertEquals(app.getUser().elementGetText(By.xpath("//*[@role='dialog']//h2")),"Logged in success");
+
+        Assert.assertEquals(app.getUser().elementGetText
+                (By.xpath("//*[@role='dialog']//h2")),"Login or Password incorrect");
         //как устроена цепочка? Чейн, методы возвращаюстя кроме войдов
         // и для этого необходимо модифицировать сеттеры так чтобы вернуть что-то полезное
         //
+        app.getUser().submitFailedLogin();
+
+
 
     } @Test public void loginPositiveUserData (){
 
         User user = new User()
-                .withEmail("asdf@fgmail.com")
+                .withEmail("abc@def.com")
                 .withPassword("$Abcdef12345")
                 ;
         //
@@ -44,14 +47,11 @@ public class LoginTests extends TestBase {
         app.getUser().pause(3000);
         //
        // Assert.assertTrue(app.getUser().isElementPresent(By.cssSelector("[href='/logout?url=%2Fsearch']")));
-        Assert.assertEquals(app.getUser().elementGetText(By.xpath("//*[@role='dialog']//h2")),"Logged in success");
+        Assert.assertEquals(app.getUser().elementGetText
+                (By.xpath("//*[@role='dialog']//h2")),"Logged in success");
         //
 
     }
-
-
-
-
 
 
 
