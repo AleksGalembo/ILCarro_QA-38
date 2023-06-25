@@ -25,15 +25,16 @@ public class Registration extends TestBase {
         app.getUser().openRegistrationForm();
         app.getUser().fillRegistrationForm(user);
         app.getUser().submitLogin();
-        Assert.assertTrue(app.getUser().isLoggedSuccess());
+        Assert.assertTrue(app.getUser()
+                .isLoggedSuccess());
 
     }
     @Test
     public void registrationNegative(){
         int i = (int)(System.currentTimeMillis()/1000)%3600;
         User user = new User()
-                .withName("")
-                .withLastName("")
+                .withName("John")
+                .withLastName("Snow")
                 .withEmail("john_" + i + "mail.com")
                 .withPassword("$Asdf1234");
 
