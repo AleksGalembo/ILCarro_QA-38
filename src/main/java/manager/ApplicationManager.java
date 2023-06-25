@@ -13,17 +13,24 @@ public class ApplicationManager {
 
     HelperUser user;// для связи с tests
 
+    HelperCar car;
+
     public HelperUser getUser() {
         return user; //generate getter user
         //через этот метод мы получаем доступ к объекту класса юзер
         //
     }
+    public HelperCar getCar() {
+        return car;
+    }
 
     @BeforeSuite
-    public void init(){
+    public void init() {
         wd = new ChromeDriver();
         user = new HelperUser(wd);// для связи с tests
-        wd.navigate().to("https://ilcarro.web.app/");
+        car = new HelperCar(wd);
+        wd.manage().window().maximize();
+        wd.navigate().to("https://ilcarro.web.app/search");
         wd.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
     }
 

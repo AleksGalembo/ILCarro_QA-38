@@ -17,6 +17,12 @@ public class HelperUser extends HelperBase {
         wd.findElement(By.cssSelector("[href='/login?url=%2Fsearch']")).click();
     }
 
+
+    public void openRegistrationForm(){
+        wd.findElement(By.xpath("//*[.=' Sign up ']")).click();
+    }
+
+
     public void fillLoginForm
             (String email, String password) {
         type(By.cssSelector("[id$='email']"), email);// //button[@type='submit']
@@ -25,8 +31,17 @@ public class HelperUser extends HelperBase {
 
     public void fillLoginForm
             (User user) {
-        type(By.cssSelector("[id$='email']"), user.getEmail());// //тут мы видим признаки полиморфизма (оверлодинг)
-        type(By.cssSelector("[id$='password']"), user.getPassword());
+        type(By.xpath("//input[@id='email']"), user.getEmail());
+        type(By.xpath("//input[@id='password']"), user.getPassword());
+    }
+
+
+    public void fillRegistrationForm(User user){
+        type(By.xpath("//input[@id='name']"), user.getName());
+        type(By.xpath("//input[@id='lastName']"), user.getLastName());
+        type(By.xpath("//input[@id='email']"), user.getEmail());
+        type(By.xpath("//input[@id='password']"), user.getPassword());
+        click(By.cssSelector("label[for='terms-of-use']"));
     }
 
 //    public void submitRegistration(){
@@ -34,7 +49,7 @@ public class HelperUser extends HelperBase {
 //    }
 
     public void submitLogin(){
-        click(By.cssSelector("button[type='submit']"));
+        wd.findElement(By.xpath("//button[@type='submit']")).submit();
     }
     public void submitFailedLogin(){
         click(By.xpath("//button[@type='button']"));
@@ -42,11 +57,17 @@ public class HelperUser extends HelperBase {
 
 
     public void logout(){
-        click(By.cssSelector("[href=\"/logout?url=%2Fsearch\"]"));
+        click(By.xpath("//*[.=' Logout ']"));
     }
 
     public boolean isLogged(){
-        return isElementPresent(By.cssSelector("[href=\"/logout?url=%2Fsearch\"]"));//
+        return isElementPresent(By.xpath("//*[.=' Logout ']"));
+    }
+
+
+
+    public boolean isLoggedSuccess(){
+        return isElementPresent(By.xpath("//h2[contains(text(), 'success')]"));
     }
 
     public boolean isDialogWindowPresent(){
@@ -56,4 +77,19 @@ public class HelperUser extends HelperBase {
     public void closeDialogWindow (){
         click(By.xpath("//*[@type='button']"));
     }
+
+    //
+    public void clickOkButton(){
+       click(By.xpath("//button[@type='button']"));
+    }
+
+    public void login (User user) {
+        openLoginForm();
+        fillLoginForm(user);
+        submitLogin();
+        clickOkButton();
+    }
+
+
+
 }

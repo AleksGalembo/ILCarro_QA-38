@@ -12,7 +12,7 @@ public class LoginTests extends TestBase {
 
     @BeforeMethod
     public void preconditions(){
-        if(app.getUser().isLogged())
+        if(app.getUser().isLogged())//как-то вызвали цепочкой, у меня почемуто не работает
         {
           app.getUser().logout();
         }
@@ -47,39 +47,20 @@ public class LoginTests extends TestBase {
         app.getUser().pause(3000);
         //
        // Assert.assertTrue(app.getUser().isElementPresent(By.cssSelector("[href='/logout?url=%2Fsearch']")));
-        Assert.assertEquals(app.getUser().elementGetText
-                (By.xpath("//*[@role='dialog']//h2")),"Logged in success");
-        //
+//        Assert.assertEquals(app.getUser().elementGetText
+//                (By.xpath("//*[@role='dialog']//h2")),"Logged in success");
+//        //
+      Assert.assertTrue(app.getUser().isLoggedSuccess());
 
     }
 
 
-
-//    @Test
-//    public void loginNegative(){
-//
-//        String email = "uuuUu@def.com", password = "$Abcdef12345";
-//        app.getUser().openLoginForm();
-//        app.getUser().fillLoginForm(email, password);
-//        app.getUser().submitLogin();
-//        app.getUser().pause(3000);
-//        //
-//        // Assert.assertTrue(app.getUser().isElementPresent(By.cssSelector("[href='/logout?url=%2Fsearch']")));
-//        Assert.assertEquals(app.getUser().elementGetText(By.xpath("//*[@role='dialog']//h2")),"Logged in success");
-//        //
-//
-//    }
-
-//    @AfterMethod
-//    public void tearDown(){
-//
-//
-//    }
     @AfterMethod
     public void postconditions(){
-        if(app.getUser().isDialogWindowPresent()){//если из диалог
-           app.getUser().closeDialogWindow();//
-        }
+//        if(app.getUser().isDialogWindowPresent()){//если из диалог
+//           app.getUser().closeDialogWindow();//
+//        }
+        app.getUser().clickOkButton();// -- убираем кнопку "OK"
 
     }
 
